@@ -1,0 +1,45 @@
+{
+    "misiones":
+    [
+        {
+            "id": 1,
+            "titulo": "Operación Silencio",
+            "latitud":  4.6954517,
+            "longitud": -74.2171367,
+            "distancia_pista": 500,
+            "distancia_mision": 10,
+            "pista": "El contacto o la información se encuentra cerca de la biblioteca.",
+            "objetivo_final": "Determinar la cantidad exacta de servicios de bienestar al aprendiz.",
+            "codigo_secreto": "3",
+            "completada": false
+        },
+        {
+            "id":2 ,
+            "titulo": "Operación Furia Roja",
+            "latitud": 4.6956727,
+            "longitud":  -74.2167664,
+            "distancia_pista": 500,
+            "distancia_mision": 10,
+            "pista": "Infiltración necesaria en el perímetro del parqueadero de bicicletas.",
+            "objetivo_final": "Localizar e identificar el número de estación asignado para el control de plagas.",
+            "codigo_secreto": "46",
+            "completada": false
+        },
+         {
+            "id":3 ,
+            "titulo": "Operación Eclipse",
+            "latitud": 4.6954786,
+            "longitud": -74.2164244,
+            "distancia_pista": 500,
+            "distancia_mision": 10,
+            "pista": "Infiltrarse en el área de la cafetería.",
+            "objetivo_final": "Determinar el valor comercial de las unidades Sour Grissly.",
+            "codigo_secreto": "2300",
+            "completada": false
+        }
+       
+        
+       
+        
+    ]
+}
