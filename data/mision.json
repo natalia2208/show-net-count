@@ -41,5 +41,22 @@
         
        
         
+    ],
+    "equipos":
+    [
+        {
+            "nombre": "Hacker",
+            "image": "assets/images/hacker.png"
+           
+        },
+        {
+            "nombre": "Enforcer",
+            "image": "assets/images/enforcer.png"
+           
+        },
+        {
+            "nombre": "Ghost",
+            "image": "assets/images/ghost.png"
+        }
     ]
 }
