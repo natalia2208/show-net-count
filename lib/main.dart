@@ -4,6 +4,7 @@ import 'package:shadownet/providers/mision_provider.dart';
 import 'package:shadownet/screens/contexto_screen.dart';
 import 'providers/auth_provider.dart';
 import 'screens/auth_screen.dart';
+import 'providers/dinamiColors_provider.dart'
 
 
 void main() {
@@ -12,6 +13,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => MisionProvider()),
+        ChangeNotifierProvider(create:(_)=> dinamiColorProvider()),
       ],
       child: const ShadowNetApp(),
     ),  
@@ -25,7 +27,16 @@ class ShadowNetApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
+      theme: ThemeData(
+        useMaterial3:true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: dinamiCOlorsProvider.themeColor,
+          brighness:Brightness.dark,
+        ),
+        fontFamily: 'Urbanist',
+      ),
+
+      themeMode: ThemeMode.dark,
       home: Consumer<AuthProvider>(
         builder: (context, provider, child) {
           if (provider.isAuthenticated) {
