@@ -15,7 +15,6 @@ class AuthScreen extends StatelessWidget {
         backgroundColor: Colors.black,
         title: Column(
           children: [
-            
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -73,33 +72,49 @@ class AuthScreen extends StatelessWidget {
                       Stack(
                         alignment: Alignment.center,
                         children: [
-                          Container(
-                            width: 180,
-                            height: 200,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: const Color(0xFF324d32),
-                                width: 1,
+                          Semantics(
+                            button: true,
+                            enabled: !provider.isSelfDestructActive,
+                            label: provider.isSelfDestructActive
+                                ? 'Acceso bloqueado por protocolo de autodestrucción'
+                                : 'Escanear huella dactilar',
+                            hint: provider.isSelfDestructActive
+                                ? 'El escáner está fuera de servicio'
+                                : 'Presiona dos veces para iniciar la autenticación del operador',
+                            onTap: provider.isSelfDestructActive
+                                ? null
+                                : () => provider.authenticateOperator(),
+
+                            child: Container(
+                              width: 180,
+                              height: 200,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: const Color(0xFF324d32),
+                                  width: 1,
+                                ),
+                                color: Colors.black.withValues(alpha: 0.3),
                               ),
-                              color: Colors.black.withValues(alpha: 0.3),
-                            ),
-                            child: IconButton(
-                              onPressed: () => provider.isSelfDestructActive
-                                  ? null
-                                  : provider.authenticateOperator(),
-                              icon: provider.isSelfDestructActive
-                                  ? const Icon(
-                                      Icons.lock,
-                                      size: 130,
-                                      color: Colors.red,
-                                    )
-                                  : const Icon(
-                                      Icons.fingerprint,
-                                      size: 100,
-                                      color: Color(0xFF818466),
-                                    ),
+
+                              child: IconButton(
+                                onPressed: () => provider.isSelfDestructActive
+                                    ? null
+                                    : provider.authenticateOperator(),
+                                icon: provider.isSelfDestructActive
+                                    ? const Icon(
+                                        Icons.lock,
+                                        size: 130,
+                                        color: Colors.red,
+                                      )
+                                    : const Icon(
+                                        Icons.fingerprint,
+                                        size: 100,
+                                        color: Color(0xFF818466),
+                                      ),
+                              ),
                             ),
                           ),
+
                           if (!provider.isSelfDestructActive)
                             const ScanningLine(),
                         ],
@@ -113,51 +128,59 @@ class AuthScreen extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "OPERADOR_ID: ",
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Courier',
-                    fontSize: 17,
-                  ),
-                ),
-                provider.isSelfDestructActive
-                    ? Text(
-                        "!!! ACCESO BLOQUEADO !!!",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Courier',
-                          fontSize: 17,
-                        ),
-                      )
-                    : Row(
-                        children: [
-                          Text(
-                            "OX8F4",
+            MergeSemantics(
+              child: Semantics(
+                liveRegion: provider.isSelfDestructActive,
+                label: provider.isSelfDestructActive
+                    ? 'Identificación del operador: Acceso bloqueado'
+                    : 'Identificación del operador: Código cero equis ocho efe cuatro, escaneando activo',
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "OPERADOR_ID: ",
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Courier',
+                        fontSize: 17,
+                      ),
+                    ),
+                    provider.isSelfDestructActive
+                        ? Text(
+                            "!!! ACCESO BLOQUEADO !!!",
                             style: TextStyle(
-                              color: Colors.green,
+                              color: Colors.red,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Courier',
                               fontSize: 17,
                             ),
+                          )
+                        : Row(
+                            children: [
+                              Text(
+                                "OX8F4",
+                                style: TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Courier',
+                                  fontSize: 17,
+                                ),
+                              ),
+                              Text(
+                                "  ESCANEANDO....",
+                                style: TextStyle(
+                                  color: const Color(0xFF966c01),
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Courier',
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            "  ESCANEANDO....",
-                            style: TextStyle(
-                              color: const Color(0xFF966c01),
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Courier',
-                              fontSize: 20,
-                            ),
-                          ),
-                        ],
-                      ),
-              ],
+                  ],
+                ),
+              ),
             ),
             const SizedBox(height: 20),
             if (provider.isSelfDestructActive)
@@ -317,29 +340,31 @@ class _ScanningLineState extends State<ScanningLine>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return Positioned(
-          top:
-              10 +
-              (_controller.value * 180), // Mueve la línea de arriba a abajo
-          child: Container(
-            width: 170,
-            height: 2,
-            decoration: BoxDecoration(
-              color: Colors.orange,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.orange.withValues(alpha: 0.5),
-                  blurRadius: 8,
-                  spreadRadius: 2,
-                ),
-              ],
+    return ExcludeSemantics(
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return Positioned(
+            top:
+                10 +
+                (_controller.value * 180), // Mueve la línea de arriba a abajo
+            child: Container(
+              width: 170,
+              height: 2,
+              decoration: BoxDecoration(
+                color: Colors.orange,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.orange.withValues(alpha: 0.5),
+                    blurRadius: 8,
+                    spreadRadius: 2,
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
