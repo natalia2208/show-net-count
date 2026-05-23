@@ -32,7 +32,7 @@ class ShadowNetApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
           seedColor: DinamiColorProvider().themeColor,          
-          // brighness:Brightness.dark,
+          brighness:Brightness.dark,
         ),
         fontFamily: 'Urbanist',
       ),
