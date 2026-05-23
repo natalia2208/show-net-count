@@ -14,7 +14,8 @@ class ContextoScreen extends StatefulWidget {
   State<ContextoScreen> createState() => _ContextoScreenState();
 }
 
-class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStateMixin {
+class _ContextoScreenState extends State<ContextoScreen>
+    with TickerProviderStateMixin {
   late int _currentStep;
   late List<String> _guiones;
   String _displayedText = "";
@@ -50,7 +51,9 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
     _displayedText = "";
     _isTyping = true;
     int charIndex = 0;
-    _typewriterTimer = Timer.periodic(const Duration(milliseconds: 30), (timer) {
+    _typewriterTimer = Timer.periodic(const Duration(milliseconds: 30), (
+      timer,
+    ) {
       if (charIndex < text.length) {
         setState(() {
           _displayedText += text[charIndex];
@@ -82,14 +85,14 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
       if (widget.esIntro) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) =>  MainTerminalScreen()),
+          MaterialPageRoute(builder: (context) => MainTerminalScreen()),
         );
       } else {
-      _currentStep = 0;
-      _guiones = [
-        "Conexión Establecida.\n\nEncriptacion rota. Eres oficialmente el dueño del nodo SENA.\n\nBienvenido."
-      ];
-    }
+        _currentStep = 0;
+        _guiones = [
+          "Conexión Establecida.\n\nEncriptacion rota. Eres oficialmente el dueño del nodo SENA.\n\nBienvenido.",
+        ];
+      }
     }
   }
 
@@ -141,11 +144,6 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
                 height: 250,
                 decoration: BoxDecoration(shape: BoxShape.circle, color: primaryColor.withAlpha(25)),
               ),
-            ),
-            BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 90, sigmaY: 90),
-              child: Container(color: Colors.transparent),
-            ),
 
             SafeArea(
               child: Padding(
@@ -172,10 +170,36 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
                     Center(
                       child: Stack(
                         children: [
-                          Opacity(
-                            opacity: 0.5,
-                            child: Text(
-                              '''
+                          Container(
+                            width: 12,
+                            height: 12,
+                            decoration: const BoxDecoration(
+                              color: Colors.redAccent,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          const Text(
+                            "ALERTA DE HACKEO!!",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                              letterSpacing: 2,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+
+                      Center(
+                        child: Stack(
+                          children: [
+                            Opacity(
+                              opacity: 0.5,
+                              child: ExcludeSemantics(
+                                child: Text(
+                                  '''
                                             ...-::::::::::::::-...
                                       .-MMMM`..:MMMMMMMMMMMMM:..`MMMM-.
                                     .:MMMMM.:MMMMMMMMMMMMMMMMMM:.MMMMM:.
@@ -194,19 +218,20 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
                                      ./MMMMMMMMMMMMMMMMMMM.
                                         .---:////////:---.
                                         ''',
-                              style: TextStyle(
-                                color: mintverde,
-                                fontFamily: 'Courier',
-                                fontSize: 8,
-                                height: 1.1,
-                                fontWeight: FontWeight.bold,
+                                  style: TextStyle(
+                                    color: mintverde,
+                                    fontFamily: 'Courier',
+                                    fontSize: 8,
+                                    height: 1.1,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    const Spacer(),
+                      const Spacer(),
 
                     Container(
                       width: double.infinity,
@@ -238,10 +263,27 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
                               height: 20,
                               color: primaryColor,
                             ),
-                        ],
+                            Text(
+                              _displayedText,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Courier',
+                                fontSize: 19,
+                                height: 1.5,
+                              ),
+                            ),
+                            if (!_isTyping)
+                            ExcludeFocusTraversal(child:  Container(
+                                margin: const EdgeInsets.only(top: 15),
+                                width: 10,
+                                height: 20,
+                                color: azulito,
+                              ),)
+                             
+                          ],
+                        ),
                       ),
-                    ),
-                    const Spacer(),
+                      const Spacer(),
 
                     Center(
                       child: Column(
@@ -265,15 +307,16 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
