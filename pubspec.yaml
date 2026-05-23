@@ -66,6 +66,9 @@ flutter:
   assets:
     - data/mision.json
     - assets/images/logo.png
+    - assets/images/hacker.png
+    - assets/images/enforcer.png
+    - assets/images/ghost.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

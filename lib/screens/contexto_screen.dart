@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:ui';
+import 'package:provider/provider.dart';
 import 'terminal_scren.dart';
+import '../providers/dinamiColor_provider.dart';
 
 class ContextoScreen extends StatefulWidget {
   final bool esIntro;
@@ -33,7 +35,7 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
         "Deberás descifrar las pistas y moverte físicamente por el sector.",
         "Al llegar a una zona segura, el terminal revelará un fragmento del código.",
       ];
-    } 
+    }
     _startTypewriter(_guiones[_currentStep]);
   }
 
@@ -94,9 +96,15 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
   @override
   @override
   Widget build(BuildContext context) {
-    const Color azulito = Color(0xFF76FBFB);
-    const Color morado = Color(0xFFBC00FF);
-    const Color naranja = Color(0xFFFF9100);
+    final colorProvider = context.watch<DinamiColorProvider>();
+    final Color primaryColor = colorProvider.themeColor;
+
+    // const Color azulito = Color(0xFF76FBFB);
+    // const Color morado = Color(0xFFBC00FF);
+    // const Color naranja = Color(0xFFFF9100);
+    // const Color fondo = Color(0xFF111419);
+    // const Color mintverde = Color(0xFF87CF3E);
+
     const Color fondo = Color(0xFF111419);
     const Color mintverde = Color(0xFF87CF3E);
 
@@ -113,7 +121,7 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
               child: Container(
                 width: 300,
                 height: 300,
-                decoration: BoxDecoration(shape: BoxShape.circle, color: azulito.withAlpha(30)),
+                decoration: BoxDecoration(shape: BoxShape.circle, color: primaryColor.withAlpha(30)),
               ),
             ),
             Positioned(
@@ -122,7 +130,7 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
               child: Container(
                 width: 400,
                 height: 400,
-                decoration: BoxDecoration(shape: BoxShape.circle, color: morado.withAlpha(40)),
+                decoration: BoxDecoration(shape: BoxShape.circle, color: primaryColor.withAlpha(40)),
               ),
             ),
             Positioned(
@@ -131,7 +139,7 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
               child: Container(
                 width: 250,
                 height: 250,
-                decoration: BoxDecoration(shape: BoxShape.circle, color: naranja.withAlpha(25)),
+                decoration: BoxDecoration(shape: BoxShape.circle, color: primaryColor.withAlpha(25)),
               ),
             ),
             BackdropFilter(
@@ -160,7 +168,7 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
                       ],
                     ),
                     const Spacer(),
-                    
+
                     Center(
                       child: Stack(
                         children: [
@@ -212,7 +220,7 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(Icons.terminal_rounded, color: morado, size: 30),
+                          Icon(Icons.terminal_rounded, color: primaryColor, size: 30),
                           const SizedBox(height: 20),
                           Text(
                             _displayedText,
@@ -228,7 +236,7 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
                               margin: const EdgeInsets.only(top: 15),
                               width: 10,
                               height: 20,
-                              color: azulito,
+                              color: primaryColor,
                             ),
                         ],
                       ),
@@ -252,7 +260,7 @@ class _ContextoScreenState extends State<ContextoScreen> with TickerProviderStat
                                 width: i == _currentStep ? 18 : 6,
                                 height: 5,
                                 decoration: BoxDecoration(
-                                  color: i == _currentStep ? azulito : Colors.white24,
+                                  color: i == _currentStep ? primaryColor : Colors.white24,
                                   borderRadius: BorderRadius.circular(3),
                                 ),
                               ),

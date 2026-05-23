@@ -5,6 +5,7 @@ import 'package:shadownet/screens/contexto_screen.dart';
 import '../providers/auth_provider.dart';
 import '../providers/mision_provider.dart';
 import '../widgets/pistas_widget.dart';
+import '../providers/dinamiColor_provider.dart';
 
 class MainTerminalScreen extends StatefulWidget {
   @override
@@ -18,7 +19,9 @@ class _MainTerminalMisionWidget extends State<MainTerminalScreen> {
   Widget build(BuildContext context) {
     final misionProvider = context.watch<MisionProvider>();
     final authProvider = context.watch<AuthProvider>();
+    final colorProvider = context.watch<DinamiColorProvider>();
     final mision = misionProvider.misionActual;
+    
 
     if (authProvider.currentPosition != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -64,7 +67,7 @@ class _MainTerminalMisionWidget extends State<MainTerminalScreen> {
 
     double distancia = misionProvider.distanciaActual;
     bool enRangoMision = distancia <= mision['distancia_mision'];
-    Color colorSistema = Color(0xC476FBFB);
+    final Color colorSistema = colorProvider.themeColor;
 
     return Scaffold(
       backgroundColor: Color(0xFF111419),
@@ -123,7 +126,7 @@ class _MainTerminalMisionWidget extends State<MainTerminalScreen> {
                   borderRadius: BorderRadius.circular(4),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFF27C93F),
+                      color: colorSistema.withAlpha(50),
                       blurRadius: 5,
                       spreadRadius: 2,
                     ),
