@@ -21,7 +21,6 @@ class _MainTerminalMisionWidget extends State<MainTerminalScreen> {
     final authProvider = context.watch<AuthProvider>();
     final colorProvider = context.watch<DinamiColorProvider>();
     final mision = misionProvider.misionActual;
-    
 
     if (authProvider.currentPosition != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -67,7 +66,7 @@ class _MainTerminalMisionWidget extends State<MainTerminalScreen> {
 
     double distancia = misionProvider.distanciaActual;
     bool enRangoMision = distancia <= mision['distancia_mision'];
-    final Color colorSistema = colorProvider.themeColor;
+    Color colorSistema = colorProvider.themeColor;
 
     return Scaffold(
       backgroundColor: Color(0xFF111419),

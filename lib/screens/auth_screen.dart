@@ -62,7 +62,7 @@ class AuthScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: const Color.fromARGB(255, 0, 66, 17),
-                      width: 4,
+                      width: 5,
                     ),
                     color: const Color(0xFF122412),
                   ),
@@ -119,7 +119,6 @@ class AuthScreen extends StatelessWidget {
                             const ScanningLine(),
                         ],
                       ),
-                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
@@ -128,61 +127,53 @@ class AuthScreen extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            MergeSemantics(
-              child: Semantics(
-                liveRegion: provider.isSelfDestructActive,
-                label: provider.isSelfDestructActive
-                    ? 'Identificación del operador: Acceso bloqueado'
-                    : 'Identificación del operador: Código cero equis ocho efe cuatro, escaneando activo',
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "OPERADOR_ID: ",
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Courier',
-                        fontSize: 17,
-                      ),
-                    ),
-                    provider.isSelfDestructActive
-                        ? Text(
-                            "!!! ACCESO BLOQUEADO !!!",
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "OPERADOR_ID: ",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Courier',
+                    fontSize: 17,
+                  ),
+                ),
+                provider.isSelfDestructActive
+                    ? Text(
+                        "!!! ACCESO BLOQUEADO !!!",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Courier',
+                          fontSize: 17,
+                        ),
+                      )
+                    : Row(
+                        children: [
+                          Text(
+                            "OX8F4",
                             style: TextStyle(
-                              color: Colors.red,
+                              color: Colors.green,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Courier',
                               fontSize: 17,
                             ),
-                          )
-                        : Row(
-                            children: [
-                              Text(
-                                "OX8F4",
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Courier',
-                                  fontSize: 17,
-                                ),
-                              ),
-                              Text(
-                                "  ESCANEANDO....",
-                                style: TextStyle(
-                                  color: const Color(0xFF966c01),
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Courier',
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ],
                           ),
-                  ],
-                ),
-              ),
+                          Text(
+                            "  ESCANEANDO....",
+                            style: TextStyle(
+                              color: const Color(0xFF966c01),
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Courier',
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+              ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
             if (provider.isSelfDestructActive)
               TweenAnimationBuilder<double>(
                 key: ValueKey(provider.isSelfDestructActive),
@@ -219,12 +210,7 @@ class AuthScreen extends StatelessWidget {
 
                           boxShadow: [
                             BoxShadow(
-                              color: const Color.fromARGB(
-                                255,
-                                137,
-                                184,
-                                71,
-                              ).withValues(),
+                              color: const Color.fromARGB(255,137,184,71,).withValues(),
                               blurRadius: 10,
                               spreadRadius: 2,
                             ),
@@ -264,7 +250,7 @@ class AuthScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 20),
                     Text(
-                      ">  ACCEDIENDO A LA RED ",
+                      "> ACCEDIENDO A LA RED ",
                       style: TextStyle(
                         color: Colors.green,
                         fontWeight: FontWeight.bold,
@@ -284,7 +270,7 @@ class AuthScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      ">  ESPERANDO AUTORIZACION ",
+                      "> ESPERANDO AUTORIZACiÓN ",
                       style: TextStyle(
                         color: Colors.green,
                         fontWeight: FontWeight.bold,
@@ -340,31 +326,29 @@ class _ScanningLineState extends State<ScanningLine>
 
   @override
   Widget build(BuildContext context) {
-    return ExcludeSemantics(
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          return Positioned(
-            top:
-                10 +
-                (_controller.value * 180), // Mueve la línea de arriba a abajo
-            child: Container(
-              width: 170,
-              height: 2,
-              decoration: BoxDecoration(
-                color: Colors.orange,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.orange.withValues(alpha: 0.5),
-                    blurRadius: 8,
-                    spreadRadius: 2,
-                  ),
-                ],
-              ),
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Positioned(
+          top:
+              10 +
+              (_controller.value * 180), // Mueve la línea de arriba a abajo
+          child: Container(
+            width: 170,
+            height: 2,
+            decoration: BoxDecoration(
+              color: Colors.orange,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.orange.withValues(alpha: 0.5),
+                  blurRadius: 8,
+                  spreadRadius: 2,
+                ),
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

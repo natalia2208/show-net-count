@@ -55,12 +55,21 @@ class _VistaFaccionesState extends State<VistaFacciones> {
                 children: [
                   const Text(
                     "VALIDACIÓN BIOMÉTRICA ACEPTADA",
-                    style: TextStyle(color: Color(0xFF76FBFB), fontSize: 10, letterSpacing: 2, fontFamily: 'Courier'),
+                    style: TextStyle(
+                      color: Color(0xFF76FBFB), 
+                      fontSize: 10, 
+                      letterSpacing: 2, 
+                      fontFamily: 'Courier'
+                    ),
                   ),
                   const SizedBox(height: 10),
                   const Text(
                     "SELECCIONA TU FACCIÓN",
-                    style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: 1),
+                    style: TextStyle(
+                      color: Colors.white, 
+                      fontSize: 24, 
+                      fontWeight: FontWeight.bold, 
+                      letterSpacing: 1),
                   ),
                   const SizedBox(height: 30),
                   
