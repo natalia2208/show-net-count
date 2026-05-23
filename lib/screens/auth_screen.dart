@@ -63,7 +63,7 @@ class AuthScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: const Color.fromARGB(255, 0, 66, 17),
-                      width: 4,
+                      width: 5,
                     ),
                     color: const Color(0xFF122412),
                   ),
@@ -104,7 +104,6 @@ class AuthScreen extends StatelessWidget {
                             const ScanningLine(),
                         ],
                       ),
-                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
@@ -115,16 +114,7 @@ class AuthScreen extends StatelessWidget {
 
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "OPERADOR_ID: ",
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Courier',
-                    fontSize: 17,
-                  ),
-                ),
+              children: [                
                 provider.isSelfDestructActive
                     ? Text(
                         "!!! ACCESO BLOQUEADO !!!",
@@ -135,10 +125,11 @@ class AuthScreen extends StatelessWidget {
                           fontSize: 17,
                         ),
                       )
-                    : Row(
+                    : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "OX8F4",
+                            "OPERADOR_ID: OX8F4",
                             style: TextStyle(
                               color: Colors.green,
                               fontWeight: FontWeight.bold,
@@ -146,8 +137,9 @@ class AuthScreen extends StatelessWidget {
                               fontSize: 17,
                             ),
                           ),
+                          const SizedBox(height: 5,),
                           Text(
-                            "  ESCANEANDO....",
+                            "ESCANEANDO...",
                             style: TextStyle(
                               color: const Color(0xFF966c01),
                               fontWeight: FontWeight.bold,
@@ -159,7 +151,7 @@ class AuthScreen extends StatelessWidget {
                       ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
             if (provider.isSelfDestructActive)
               TweenAnimationBuilder<double>(
                 key: ValueKey(provider.isSelfDestructActive),
@@ -196,12 +188,7 @@ class AuthScreen extends StatelessWidget {
 
                           boxShadow: [
                             BoxShadow(
-                              color: const Color.fromARGB(
-                                255,
-                                137,
-                                184,
-                                71,
-                              ).withValues(),
+                              color: const Color.fromARGB(255,137,184,71,).withValues(),
                               blurRadius: 10,
                               spreadRadius: 2,
                             ),
@@ -241,7 +228,7 @@ class AuthScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 20),
                     Text(
-                      ">  ACCEDIENDO A LA RED ",
+                      "> ACCEDIENDO A LA RED ",
                       style: TextStyle(
                         color: Colors.green,
                         fontWeight: FontWeight.bold,
@@ -261,7 +248,7 @@ class AuthScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      ">  ESPERANDO AUTORIZACION ",
+                      "> ESPERANDO AUTORIZACiÓN ",
                       style: TextStyle(
                         color: Colors.green,
                         fontWeight: FontWeight.bold,
@@ -323,7 +310,7 @@ class _ScanningLineState extends State<ScanningLine>
         return Positioned(
           top:
               10 +
-              (_controller.value * 180), // Mueve la línea de arriba a abajo
+              (_controller.value * 180),
           child: Container(
             width: 170,
             height: 2,

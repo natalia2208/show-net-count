@@ -19,9 +19,8 @@ class _MainTerminalMisionWidget extends State<MainTerminalScreen> {
   Widget build(BuildContext context) {
     final misionProvider = context.watch<MisionProvider>();
     final authProvider = context.watch<AuthProvider>();
-    final colorProvider = context.watch<DinamiColorProvider>();
     final mision = misionProvider.misionActual;
-    
+    final colorProvider = context.watch<DinamiColorProvider>();
 
     if (authProvider.currentPosition != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -67,7 +66,7 @@ class _MainTerminalMisionWidget extends State<MainTerminalScreen> {
 
     double distancia = misionProvider.distanciaActual;
     bool enRangoMision = distancia <= mision['distancia_mision'];
-    final Color colorSistema = colorProvider.themeColor;
+    Color colorSistema = colorProvider.themeColor;
 
     return Scaffold(
       backgroundColor: Color(0xFF111419),
@@ -93,21 +92,30 @@ class _MainTerminalMisionWidget extends State<MainTerminalScreen> {
                       ),
                     ],
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 2,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: colorSistema),
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                    child: Text(
-                      enRangoMision ? "SIGNAL: BREACHING" : "LINK: STABLE",
-                      style: TextStyle(
-                        color: colorSistema,
-                        fontSize: 9,
-                        fontWeight: FontWeight.bold,
+
+                  Semantics(
+                    liveRegion: true,
+                    label: enRangoMision
+                        ? "Alerta del sistema: Señal en modo vulneración. Estás en zona de objetivo."
+                        : "Estado del sistema: Enlace estable. Buscando señal.",
+                    child: ExcludeSemantics(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: colorSistema),
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                        child: Text(
+                          enRangoMision ? "SIGNAL: BREACHING" : "LINK: STABLE",
+                          style: TextStyle(
+                            color: colorSistema,
+                            fontSize: 9,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -126,7 +134,7 @@ class _MainTerminalMisionWidget extends State<MainTerminalScreen> {
                   borderRadius: BorderRadius.circular(4),
                   boxShadow: [
                     BoxShadow(
-                      color: colorSistema.withAlpha(50),
+                      color: Color(0xFF27C93F),
                       blurRadius: 5,
                       spreadRadius: 2,
                     ),
@@ -139,47 +147,54 @@ class _MainTerminalMisionWidget extends State<MainTerminalScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              const Text(
-                                "Estado:",
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 10,
-                                  fontFamily: 'Courier',
+                          MergeSemantics(
+                            child: Row(
+                              children: [
+                                const Text(
+                                  "Estado:",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 10,
+                                    fontFamily: 'Courier',
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                "${authProvider.coordinatesDisplay}",
-                                style: TextStyle(
-                                  color: colorSistema,
-                                  fontSize: 10,
-                                  fontFamily: 'Courier',
+                                Text(
+                                  "${authProvider.coordinatesDisplay}",
+                                  style: TextStyle(
+                                    color: colorSistema,
+                                    fontSize: 10,
+                                    fontFamily: 'Courier',
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
+
                           const SizedBox(height: 2),
-                          Row(
-                            children: [
-                              const Text(
-                                "Mision Actual: ",
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 10,
-                                  fontFamily: 'Courier',
+
+                          MergeSemantics(
+                            child: Row(
+                              children: [
+                                const Text(
+                                  "Mision Actual: ",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 10,
+                                    fontFamily: 'Courier',
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                "${mision['titulo']}",
-                                style: TextStyle(
-                                  color: colorSistema,
-                                  fontSize: 10,
-                                  fontFamily: 'Courier',
+                                Text(
+                                  "${mision['titulo']}",
+                                  style: TextStyle(
+                                    color: colorSistema,
+                                    fontSize: 10,
+                                    fontFamily: 'Courier',
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
+
                           const SizedBox(height: 20),
                           if (distancia <= mision['distancia_mision'])
                             Expanded(
@@ -195,12 +210,20 @@ class _MainTerminalMisionWidget extends State<MainTerminalScreen> {
                                   ),
                                   Row(
                                     children: [
-                                      const Text(
-                                        ">> ",
-                                        style: TextStyle(
-                                          color: Color.from(alpha: 1, red: 0.573, green: 0.49, blue: 0.384),
+                                      ExcludeSemantics(
+                                        child: const Text(
+                                          ">> ",
+                                          style: TextStyle(
+                                            color: Color.from(
+                                              alpha: 1,
+                                              red: 0.573,
+                                              green: 0.49,
+                                              blue: 0.384,
+                                            ),
+                                          ),
                                         ),
                                       ),
+
                                       Expanded(
                                         child: TextField(
                                           controller: _controller,
@@ -217,26 +240,34 @@ class _MainTerminalMisionWidget extends State<MainTerminalScreen> {
                                           ),
                                         ),
                                       ),
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          minimumSize: Size(20, 30),
-                                          backgroundColor: Colors.black,
-                                          side: const BorderSide(
-                                            color: Color(0xFFD186DA),
+
+                                      Semantics(
+                                        button: true,
+                                        label: "Enviar código secreto",
+                                        hint:
+                                            "Presiona dos veces para validar el código introducido",
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            minimumSize: Size(20, 30),
+                                            backgroundColor: Colors.black,
+                                            side: const BorderSide(
+                                              color: Color(0xFFD186DA),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            misionProvider.completarMision(
+                                              codigoSecreto: _controller.text
+                                                  .trim(),
+                                            );
+                                            _controller.clear();
+                                          },
+                                          child: const Icon(
+                                            Icons.send_outlined,
+                                            size: 15,
                                           ),
                                         ),
-                                        onPressed: () {
-                                          misionProvider.completarMision(
-                                            codigoSecreto: _controller.text
-                                                .trim(),
-                                          );
-                                          _controller.clear();
-                                        },
-                                        child: const Icon(
-                                          Icons.send_outlined,
-                                          size: 15,
-                                        ),
                                       ),
+
                                       Text(
                                         misionProvider.mensajeError,
                                         style: TextStyle(
@@ -279,47 +310,63 @@ class _MainTerminalMisionWidget extends State<MainTerminalScreen> {
                   top: BorderSide(color: Color(0xFF1A1A1A), width: 1),
                 ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "COORD_X_Y",
-                        style: TextStyle(color: Colors.grey, fontSize: 8),
+              child: Semantics(
+                label: "Panel de estado de geolocalización de la consola",
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    MergeSemantics(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "COORD_X_Y",
+                            style: TextStyle(color: Colors.grey, fontSize: 8),
+                          ),
+                          Text(
+                            authProvider.coordinatesDisplay
+                                .split(':')
+                                .last
+                                .trim(),
+                            style: TextStyle(
+                              color: colorSistema,
+                              fontSize: 10,
+                              fontFamily: 'Courier',
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        authProvider.coordinatesDisplay.split(':').last.trim(),
-                        style: TextStyle(
-                          color: colorSistema,
-                          fontSize: 10,
-                          fontFamily: 'Courier',
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
 
-                  Icon(Icons.fingerprint, color: colorSistema, size: 24),
+                    ExcludeSemantics(
+                      child: Icon(
+                        Icons.fingerprint,
+                        color: colorSistema,
+                        size: 24,
+                      ),
+                    ),
 
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const Text(
-                        "SYS_STATUS",
-                        style: TextStyle(color: Colors.grey, fontSize: 8),
+                    MergeSemantics(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const Text(
+                            "SYS_STATUS",
+                            style: TextStyle(color: Colors.grey, fontSize: 8),
+                          ),
+                          Text(
+                            enRangoMision ? "OVERRIDE" : "SCANNING",
+                            style: TextStyle(
+                              color: colorSistema,
+                              fontSize: 10,
+                              fontFamily: 'Courier',
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        enRangoMision ? "OVERRIDE" : "SCANNING",
-                        style: TextStyle(
-                          color: colorSistema,
-                          fontSize: 10,
-                          fontFamily: 'Courier',
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

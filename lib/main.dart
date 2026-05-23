@@ -13,10 +13,10 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => MisionProvider()),
-        ChangeNotifierProvider(create: (_) => DinamiColorProvider()),
+        ChangeNotifierProvider(create:(_)=> DinamiColorProvider()),
       ],
       child: const ShadowNetApp(),
-    ),
+    ),  
   );
 }
 
@@ -28,10 +28,10 @@ class ShadowNetApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        useMaterial3: true,
+        useMaterial3:true,
         colorScheme: ColorScheme.fromSeed(
           seedColor: DinamiColorProvider().themeColor,
-          // brighness: Brightness.dark,
+          // brighness:Brightness.dark,
         ),
         fontFamily: 'Urbanist',
       ),
@@ -40,9 +40,9 @@ class ShadowNetApp extends StatelessWidget {
       home: Consumer<AuthProvider>(
         builder: (context, provider, child) {
           if (provider.isAuthenticated) {
-            return const VistaFacciones();
+            return const VistaFacciones();  
           } else {
-            return const AuthScreen();
+            return const AuthScreen(); 
           }
         },
       ),

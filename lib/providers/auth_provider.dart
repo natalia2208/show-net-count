@@ -26,7 +26,6 @@ class AuthProvider extends ChangeNotifier {
 
   try {
     if (!Platform.isAndroid) {
-      // Si quieres, aquí dejas fallback para iOS
       _errorAutentication();
       notifyListeners();
       return;
@@ -44,12 +43,9 @@ class AuthProvider extends ChangeNotifier {
       _authAttempts = 0;
       await activateTracking();
     } else if (status == 'locked') {
-      // 3 fallos sin cerrar manualmente el prompt
       _authAttempts = 3;
-      _triggerSelfDestruct(); // tu error actual de auth_screen se mostrará
+      _triggerSelfDestruct();
     } else {
-      // "error": cancelación, cierre por sistema, etc.
-      // Si NO quieres contar cancelaciones, no sumes aquí.
       // _errorAutentication();
     }
   } on PlatformException {
