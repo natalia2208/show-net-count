@@ -4,7 +4,7 @@ Aplicación Flutter de misión geolocalizada con estética de terminal encubiert
 
 ---
 
-## Tema dinámico: de la imagen al `seedColor`
+## Tema dinámico: `seedColor`
 
 ### Arquitectura
 
@@ -52,7 +52,7 @@ ColorScheme.fromSeed(seedColor: themeColor)
 
 ## Árbol de Semantics
 
-La UI prioriza el estilo visual (ASCII, blur, animaciones), pero el árbol semántico paralelo traduce esa experiencia a etiquetas, regiones vivas y acciones comprensibles para **TalkBack**, **VoiceOver** y herramientas de inspección de accesibilidad.
+La UI prioriza el estilo visual, pero el árbol semántico paralelo traduce esa experiencia a etiquetas, regiones vivas y acciones comprensibles para **TalkBack**, **VoiceOver** y herramientas de inspección de accesibilidad.
 
 ### Principios aplicados
 
@@ -64,55 +64,9 @@ La UI prioriza el estilo visual (ASCII, blur, animaciones), pero el árbol semá
 | `MergeSemantics` | Agrupa etiqueta + valor en un solo nodo (p. ej. «Estado:» + coordenadas) |
 | `ExcludeSemantics` | Oculta ornamentos, duplicados visuales o animaciones puramente decorativas |
 
-### Por pantalla
 
-#### `AuthScreen` — acceso biométrico
 
-- **Escáner de huella** — Nodo `Semantics` con `button: true`, `enabled` ligado al protocolo de autodestrucción, `label` y `hint` contextuales, y `onTap` que delega en `authenticateOperator()`. El `IconButton` visual queda dentro del mismo árbol accionable.
-- **Identificación del operador** — `MergeSemantics` envuelve la fila «OPERADOR_ID» para que lectores de pantalla lean un bloque coherente. `liveRegion` se activa al bloquear el acceso, forzando el anuncio del cambio crítico.
-- **Línea de escaneo** — `ExcludeSemantics` en `ScanningLine`: animación puramente visual, sin ruido en el árbol.
-
-#### `ContextoScreen` — narrativa introductoria
-
-- **Raíz de pantalla** — `Semantics` global con `button: true`, etiqueta dinámica según si el texto se está escribiendo o se avanza al siguiente guion, `hint` de doble toque y `onTap` enlazado a `_nextStep`. Toda la pantalla actúa como un único control de avance.
-- **Arte ASCII** — `ExcludeSemantics` sobre el bloque decorativo del hacker para no interrumpir la lectura del guion.
-- **Terminal narrativo** — `liveRegion: true` con `label: 'Mensaje del terminal: …'` para que cada fragmento del typewriter se anuncie al actualizarse.
-- **Progreso** — Nodo dedicado: «Paso X de N» sobre los indicadores visuales de puntos.
-
-#### `TerminalScreen` — consola de misión
-
-- **Estado de enlace** — `liveRegion` con etiqueta que distingue «señal en vulneración» frente a «enlace estable»; el `Container` con texto críptico (`SIGNAL: BREACHING` / `LINK: STABLE`) va bajo `ExcludeSemantics` para evitar duplicar el anuncio.
-- **Panel de datos** — `MergeSemantics` en filas «Estado + coordenadas» y «Misión actual + título», uniendo prefijo y valor en una sola frase.
-- **Envío de código** — Botón semántico independiente con `label`, `hint` y `button: true` sobre el `ElevatedButton` de envío; el prefijo visual `>>` queda excluido del árbol.
-- **Barra inferior** — Contenedor semántico «Panel de estado de geolocalización» con dos columnas fusionadas (`COORD_X_Y`, `SYS_STATUS`) y el icono de huella excluido por ser redundante con el texto adyacente.
-
-### Flujo conceptual del árbol
-
-```mermaid
-flowchart TB
-  subgraph auth [AuthScreen]
-    A1[Semantics: escáner biométrico]
-    A2[MergeSemantics: OPERADOR_ID]
-    A3[ExcludeSemantics: animación]
-  end
-  subgraph ctx [ContextoScreen]
-    C1[Semantics raíz: avanzar historia]
-    C2[ExcludeSemantics: ASCII]
-    C3[liveRegion: mensaje terminal]
-    C4[Semantics: progreso]
-  end
-  subgraph term [TerminalScreen]
-    T1[liveRegion: alerta señal]
-    T2[MergeSemantics: estado / misión]
-    T3[Semantics: enviar código]
-    T4[MergeSemantics: barra inferior]
-  end
-  auth --> ctx --> term
-```
-
----
-
-## Stack y dependencias relevantes
+## dependencias relevantes
 
 | Paquete | Rol |
 |---------|-----|
