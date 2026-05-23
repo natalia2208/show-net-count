@@ -207,6 +207,7 @@ class _ContextoScreenState extends State<ContextoScreen>
                           ),
                         ],
                       ),
+                    ),
                       const Spacer(),
                         Center(
                           child: Stack(
@@ -298,18 +299,13 @@ class _ContextoScreenState extends State<ContextoScreen>
                               label: 'Mensaje del terminal: $_displayedText',
                               child: Text(
                                 _displayedText,
-                                style: const TextStyle(),
-                              ),
-                            ),
-                            Text(
-                              _displayedText,
-                              style: const TextStyle(
-                                color: Colors.white,
+                                style: const TextStyle(color: Colors.white,
                                 fontFamily: 'Courier',
                                 fontSize: 19,
-                                height: 1.5,
+                                height: 1.5,),
                               ),
                             ),
+                            
                             if (!_isTyping)
                             ExcludeFocusTraversal(child:  Container(
                                 margin: const EdgeInsets.only(top: 15),

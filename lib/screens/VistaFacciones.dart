@@ -43,7 +43,10 @@ class _VistaFaccionesState extends State<VistaFacciones> {
         builder: (context, provider, child) {
           if (provider.equipos.isEmpty) {
             return const Center(
+              child: Semantics(
+                label: "Cargando lista de facciones"
               child: CircularProgressIndicator(color: Colors.white38),
+              ),
             );
           }
 
@@ -83,7 +86,13 @@ class _VistaFaccionesState extends State<VistaFacciones> {
                         final descripcion = equipo['descripcion'] ?? 'Sin datos de registro en el servidor.';
                         final imageUrl = equipo['images'] ?? '';
 
-                        return GestureDetector(
+                        return Semantics(
+                          button: true,
+                          container: true,
+                          label: "Faccion: ${nombre.toString().toUpperCase()}. $descripcion",
+                          onTapHint:: "Seleccionar Faccion",
+                          child: 
+                        GestureDetector(
                           behavior: HitTestBehavior.opaque,
                           onTap: () => _seleccionarFaccion(index, equipo),
                           child: Container(
@@ -95,6 +104,8 @@ class _VistaFaccionesState extends State<VistaFacciones> {
                             ),
                             child: Row(
                               children: [
+                                ExcludeSemantics(
+                                  child:
                                 ClipRRect(
                                   borderRadius: const BorderRadius.horizontal(left: Radius.circular(16)),
                                   child: Image.asset(
@@ -108,7 +119,10 @@ class _VistaFaccionesState extends State<VistaFacciones> {
                                     ),
                                   ),
                                 ),
+                                ),
                                 Expanded(
+                                  child: ExcludeSemantics(
+
                                   child: Padding(
                                     padding: const EdgeInsets.all(16),
                                     child: Column(
@@ -133,11 +147,15 @@ class _VistaFaccionesState extends State<VistaFacciones> {
                                       ],
                                     ),
                                   ),
+
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                         );
+                        ),
+                        
                       },
                     ),
                   ),

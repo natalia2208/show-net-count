@@ -62,7 +62,8 @@ class _VistaFelicidadesState extends State<VistaFelicidades> with SingleTickerPr
 
           return Stack(
             children: [
-              Positioned.fill(
+              ExcludeSemantics(
+                Positioned.fill(
                 child: Center(
                   child: Container(
                     width: 300,
@@ -74,14 +75,22 @@ class _VistaFelicidadesState extends State<VistaFelicidades> with SingleTickerPr
                   ),
                 ),
               ),
+              ),
+
+              Excludeemantics(
+
               BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 80, sigmaY: 80),
                 child: Container(color: Colors.transparent),
               ),
+              ),
               
               SafeArea(
                 child: Center(
-                  child: Column(
+                  child: Semantics(
+                    container: true,
+                    label:"pantalla de exito",
+                    child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
@@ -90,6 +99,10 @@ class _VistaFelicidadesState extends State<VistaFelicidades> with SingleTickerPr
                       ),
                       const SizedBox(height: 40),
                       
+                      Semantics(
+                        image: true,
+                        label: "Emblema de la faccion ${nombreFaccion}",
+                        child:
                       ScaleTransition(
                         scale: _scaleAnimation,
                         child: Container(
@@ -108,6 +121,8 @@ class _VistaFelicidadesState extends State<VistaFelicidades> with SingleTickerPr
                           ),
                         ),
                       ),
+                      ),
+
                       
                       const SizedBox(height: 50),
                       
@@ -133,7 +148,10 @@ class _VistaFelicidadesState extends State<VistaFelicidades> with SingleTickerPr
                       ),
                       
                       const SizedBox(height: 60),
-                      
+                      Semantics(
+                        label:"Progreso de sincronizacion de la vista",
+                        value: "Cargando",
+                        child: 
                       SizedBox(
                         width: 150,
                         child: LinearProgressIndicator(
@@ -142,12 +160,14 @@ class _VistaFelicidadesState extends State<VistaFelicidades> with SingleTickerPr
                           minHeight: 2,
                         ),
                       ),
+                      ),
                       const SizedBox(height: 15),
                       const Text(
                         "SINCRONIZANDO VISTAS...",
                         style: TextStyle(color: Colors.white54, fontSize: 8, letterSpacing: 1),
                       ),
                     ],
+                  ),
                   ),
                 ),
               ),
