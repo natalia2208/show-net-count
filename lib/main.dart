@@ -14,6 +14,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => MisionProvider()),
         ChangeNotifierProvider(create:(_)=> DinamiColorProvider()),
+        ChangeNotifierProvider(create:(_)=> DinamiColorProvider()),
       ],
       child: const ShadowNetApp(),
     ),  
@@ -30,7 +31,7 @@ class ShadowNetApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3:true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: DinamiColorProvider().themeColor,
+          seedColor: DinamiColorProvider().themeColor,          
           // brighness:Brightness.dark,
         ),
         fontFamily: 'Urbanist',

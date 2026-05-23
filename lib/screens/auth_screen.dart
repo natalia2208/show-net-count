@@ -15,7 +15,6 @@ class AuthScreen extends StatelessWidget {
         backgroundColor: Colors.black,
         title: Column(
           children: [
-            
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -73,33 +72,49 @@ class AuthScreen extends StatelessWidget {
                       Stack(
                         alignment: Alignment.center,
                         children: [
-                          Container(
-                            width: 180,
-                            height: 200,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: const Color(0xFF324d32),
-                                width: 1,
+                          Semantics(
+                            button: true,
+                            enabled: !provider.isSelfDestructActive,
+                            label: provider.isSelfDestructActive
+                                ? 'Acceso bloqueado por protocolo de autodestrucción'
+                                : 'Escanear huella dactilar',
+                            hint: provider.isSelfDestructActive
+                                ? 'El escáner está fuera de servicio'
+                                : 'Presiona dos veces para iniciar la autenticación del operador',
+                            onTap: provider.isSelfDestructActive
+                                ? null
+                                : () => provider.authenticateOperator(),
+
+                            child: Container(
+                              width: 180,
+                              height: 200,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: const Color(0xFF324d32),
+                                  width: 1,
+                                ),
+                                color: Colors.black.withValues(alpha: 0.3),
                               ),
-                              color: Colors.black.withValues(alpha: 0.3),
-                            ),
-                            child: IconButton(
-                              onPressed: () => provider.isSelfDestructActive
-                                  ? null
-                                  : provider.authenticateOperator(),
-                              icon: provider.isSelfDestructActive
-                                  ? const Icon(
-                                      Icons.lock,
-                                      size: 130,
-                                      color: Colors.red,
-                                    )
-                                  : const Icon(
-                                      Icons.fingerprint,
-                                      size: 100,
-                                      color: Color(0xFF818466),
-                                    ),
+
+                              child: IconButton(
+                                onPressed: () => provider.isSelfDestructActive
+                                    ? null
+                                    : provider.authenticateOperator(),
+                                icon: provider.isSelfDestructActive
+                                    ? const Icon(
+                                        Icons.lock,
+                                        size: 130,
+                                        color: Colors.red,
+                                      )
+                                    : const Icon(
+                                        Icons.fingerprint,
+                                        size: 100,
+                                        color: Color(0xFF818466),
+                                      ),
+                              ),
                             ),
                           ),
+
                           if (!provider.isSelfDestructActive)
                             const ScanningLine(),
                         ],
@@ -114,7 +129,16 @@ class AuthScreen extends StatelessWidget {
 
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [                
+              children: [
+                Text(
+                  "OPERADOR_ID: ",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Courier',
+                    fontSize: 17,
+                  ),
+                ),
                 provider.isSelfDestructActive
                     ? Text(
                         "!!! ACCESO BLOQUEADO !!!",
@@ -125,11 +149,10 @@ class AuthScreen extends StatelessWidget {
                           fontSize: 17,
                         ),
                       )
-                    : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    : Row(
                         children: [
                           Text(
-                            "OPERADOR_ID: OX8F4",
+                            "OX8F4",
                             style: TextStyle(
                               color: Colors.green,
                               fontWeight: FontWeight.bold,
@@ -137,9 +160,8 @@ class AuthScreen extends StatelessWidget {
                               fontSize: 17,
                             ),
                           ),
-                          const SizedBox(height: 5,),
                           Text(
-                            "ESCANEANDO...",
+                            "  ESCANEANDO....",
                             style: TextStyle(
                               color: const Color(0xFF966c01),
                               fontWeight: FontWeight.bold,
@@ -310,7 +332,7 @@ class _ScanningLineState extends State<ScanningLine>
         return Positioned(
           top:
               10 +
-              (_controller.value * 180),
+              (_controller.value * 180), // Mueve la línea de arriba a abajo
           child: Container(
             width: 170,
             height: 2,
