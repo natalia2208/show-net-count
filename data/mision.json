@@ -42,21 +42,21 @@
        
         
     ],
-    "equipos":
-    [
+    "equipos": [
         {
-            "nombre": "Hacker",
-            "image": "assets/images/hacker.png"
-           
+          "nombre": "Hacker",
+          "descripcion": "Arquitectos del código. Especialistas en infiltración digital capaces de romper la encriptación de 'The Core' desde las sombras.",
+          "images": "assets/images/hacker.png"
         },
         {
-            "nombre": "Enforcer",
-            "image": "assets/images/enforcer.png"
-           
+          "nombre": "Enforcer",
+          "descripcion": "Fuerza de choque cibernética. Operadores tácticos que utilizan protocolos de fuerza bruta para tumbar firewalls físicos y virtuales.",
+          "images": "assets/images/enforcer.png"
         },
         {
-            "nombre": "Ghost",
-            "image": "assets/images/ghost.png"
+          "nombre": "Ghost",
+          "descripcion": "Espectros del sistema. Se mueven sin dejar rastro y extraen información de los nodos sin disparar las alarmas de la IA.",
+          "images": "assets/images/ghost.png"
         }
-    ]
+  ]
 }

@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
-
-
-
-
 class DinamiColorProvider extends ChangeNotifier {
 
   Color _themeColor = const Color.fromARGB(221, 144, 160, 195);
@@ -25,10 +21,8 @@ class DinamiColorProvider extends ChangeNotifier {
 
       _equipos = List<Map<String, dynamic>>.from(datos["equipos"]);
       _isLoaded = true;
-
-     
-
       notifyListeners();
+
     } catch (e) {
       print("Error cargando el JSON: $e");
     }
@@ -36,15 +30,14 @@ class DinamiColorProvider extends ChangeNotifier {
 
   void getColor(int index){
     if (index < 0 || index >= _equipos.length) return;
-    final String imageUrl = _equipos[index]['image'];
-   
+    final String imageUrl = _equipos[index]['images'];
     _extractDominantColor(imageUrl);
   }
 
-  Future<void> _extractDominantColor(String image) async {
+  Future<void> _extractDominantColor(String images) async {
     try {
       final PaletteGenerator paletteGenerator = await PaletteGenerator.fromImageProvider(
-        NetworkImage(image)
+        AssetImage(images)
         , size: Size(200, 200));
 
       _themeColor = paletteGenerator.vibrantColor?.color ??
@@ -53,10 +46,7 @@ class DinamiColorProvider extends ChangeNotifier {
                     paletteGenerator.darkVibrantColor?.color ??
                     paletteGenerator.lightMutedColor?.color ??
                     paletteGenerator.darkMutedColor?.color ??
-                    Colors.blue; // fallback
-     
-        
-     
+                    Colors.blue;
     } catch (e) {
        _themeColor = Colors.deepPurple;
        print("Error al extraer color, aplicando fallback: $e");
@@ -65,9 +55,5 @@ class DinamiColorProvider extends ChangeNotifier {
       print(_themeColor);
       notifyListeners();
     }
-
-    
   }
-  
-  
 }
