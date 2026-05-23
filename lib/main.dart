@@ -17,7 +17,7 @@ void main() {
         ChangeNotifierProvider(create:(_)=> DinamiColorProvider()),
       ],
       child: const ShadowNetApp(),
-    ),  
+    ),
   );
 }
 
@@ -29,7 +29,7 @@ class ShadowNetApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        useMaterial3:true,
+        useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
           seedColor: DinamiColorProvider().themeColor,          
           // brighness:Brightness.dark,
@@ -43,7 +43,7 @@ class ShadowNetApp extends StatelessWidget {
           if (provider.isAuthenticated) {
             return const VistaFacciones();  
           } else {
-            return const AuthScreen(); 
+            return const AuthScreen();
           }
         },
       ),

@@ -19,8 +19,8 @@ class _MainTerminalMisionWidget extends State<MainTerminalScreen> {
   Widget build(BuildContext context) {
     final misionProvider = context.watch<MisionProvider>();
     final authProvider = context.watch<AuthProvider>();
-    final mision = misionProvider.misionActual;
     final colorProvider = context.watch<DinamiColorProvider>();
+    final mision = misionProvider.misionActual;
 
     if (authProvider.currentPosition != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -134,7 +134,7 @@ class _MainTerminalMisionWidget extends State<MainTerminalScreen> {
                   borderRadius: BorderRadius.circular(4),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFF27C93F),
+                      color: colorSistema.withAlpha(50),
                       blurRadius: 5,
                       spreadRadius: 2,
                     ),

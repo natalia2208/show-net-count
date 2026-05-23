@@ -162,16 +162,30 @@ class _ContextoScreenState extends State<ContextoScreen>
                 child: Container(color: Colors.transparent),
               ),
 
-              SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 40,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 12,
+                          height: 12,
+                          decoration: const BoxDecoration(color: Colors.redAccent, shape: BoxShape.circle),
+                        ),
+                        const SizedBox(width: 8),
+                        const Text(
+                          "ALERTA DE HACKEO!!",
+                          style: TextStyle(color: Colors.white, fontSize: 10, letterSpacing: 2, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+
+                    Center(
+                      child: Stack(
                         children: [
                           Container(
                             width: 12,
